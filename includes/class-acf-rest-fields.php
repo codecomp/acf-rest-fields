@@ -4,7 +4,7 @@
  * The file that defines the core plugin class
  *
  * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
+ * REST API side of the site and the admin area.
  *
  * @link       https://github.com/codecomp/acf-rest-fields
  * @since      1.0.0
@@ -17,7 +17,7 @@
  * The core plugin class.
  *
  * This is used to define internationalization, admin-specific hooks, and
- * public-facing site hooks.
+ * REST API hooks.
  *
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
@@ -62,7 +62,7 @@ class Acf_Rest_Fields {
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
-	 * the public-facing side of the site.
+	 * the REST API.
 	 *
 	 * @since    1.0.0
 	 */
@@ -77,7 +77,7 @@ class Acf_Rest_Fields {
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
-		$this->define_public_hooks();
+		$this->define_rest_hooks();
 
 	}
 
@@ -89,7 +89,7 @@ class Acf_Rest_Fields {
 	 * - Acf_Rest_Fields_Loader. Orchestrates the hooks of the plugin.
 	 * - Acf_Rest_Fields_i18n. Defines internationalization functionality.
 	 * - Acf_Rest_Fields_Admin. Defines all hooks for the admin area.
-	 * - Acf_Rest_Fields_Public. Defines all hooks for the public side of the site.
+	 * - Acf_Rest_Fields_Rest. Defines all hooks for the REST api.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -117,10 +117,9 @@ class Acf_Rest_Fields {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-acf-rest-fields-admin.php';
 
 		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
+		 * The class responsible for defining all actions that occur in the REST API
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-acf-rest-fields-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'rest/class-acf-rest-fields-rest.php';
 
 		$this->loader = new Acf_Rest_Fields_Loader();
 
@@ -160,18 +159,14 @@ class Acf_Rest_Fields {
 	}
 
 	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
+	 * Register all of the hooks related to the REST API
 	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_public_hooks() {
+	private function define_rest_hooks() {
 
-		$plugin_public = new Acf_Rest_Fields_Public( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$plugin_rest = new Acf_Rest_Fields_Rest( $this->get_plugin_name(), $this->get_version() );
 
 	}
 
