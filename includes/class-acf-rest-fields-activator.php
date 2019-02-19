@@ -23,13 +23,16 @@
 class Acf_Rest_Fields_Activator {
 
 	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
+	 * Reuire ACF for plugin activation
 	 *
 	 * @since    1.0.0
 	 */
 	public static function activate() {
+
+		if(!class_exists('ACF')) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die( __('ACF Reqiuired for plugin activation', 'acf-rest-fields') );
+		}
 
 	}
 
