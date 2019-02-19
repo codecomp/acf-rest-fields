@@ -19,8 +19,7 @@ Add ACF fields to existing REST endpoints instead of using of custom endpoints a
 
 == Functionality Roadmap ==
 
-* Add custom field content to posts and pages endpoints.
-* Add custom field content to all custom post type queries.
+* Filter post type queries fields are added to.
 * Add custom field content to taxonomy queries
 * Add custom fields to Attachments, Widgets, Comments, Users
 * Find solution to adding ACF fields to menu queries in other plugins

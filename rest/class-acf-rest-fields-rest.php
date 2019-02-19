@@ -54,4 +54,23 @@ class Acf_Rest_Fields_Rest {
 
 	}
 
+	public function get_register_post_type_fields($post, $object, $field_name) {
+
+		// TODO - Filter in / out requested fields
+
+		return get_fields($post->id);
+	}
+
+	public function register_post_type_fields() {
+		$post_types = get_post_types();
+
+		// TODO - Filter list to only include needed post types
+
+		foreach ($post_types as $post_type) {
+			register_rest_field($post_type, "acf", array(
+				'get_callback' => array($this, 'get_register_post_type_fields')
+			));
+		}
+	}
+
 }
