@@ -155,6 +155,8 @@ class Acf_Rest_Fields {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_options_pages' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'admin_options_settings_init' );
 
 	}
 

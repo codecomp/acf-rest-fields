@@ -62,11 +62,9 @@ class Acf_Rest_Fields_Rest {
 	}
 
 	public function register_post_type_fields() {
-		$post_types = get_post_types();
+		$options = get_option( 'acf-rest-fields' );
 
-		// TODO - Filter list to only include needed post types
-
-		foreach ($post_types as $post_type) {
+		foreach ($options['post_types'] as $post_type) {
 			register_rest_field($post_type, "acf", array(
 				'get_callback' => array($this, 'get_register_post_type_fields')
 			));
