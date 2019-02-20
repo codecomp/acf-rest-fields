@@ -62,12 +62,14 @@ class Acf_Rest_Fields_Rest {
 	}
 
 	public function register_post_type_fields() {
-		$options = get_option( 'acf-rest-fields' );
+		$options = get_option( 'acf-rest-fields', array() );
 
-		foreach ($options['post_types'] as $post_type) {
-			register_rest_field($post_type, "acf", array(
-				'get_callback' => array($this, 'get_register_post_type_fields')
-			));
+		if( $options['post_types'] ){
+			foreach ($options['post_types'] as $post_type) {
+				register_rest_field($post_type, "acf", array(
+					'get_callback' => array($this, 'get_register_post_type_fields')
+				));
+			}
 		}
 	}
 
