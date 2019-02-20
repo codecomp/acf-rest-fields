@@ -131,11 +131,11 @@ class Acf_Rest_Fields_Rest {
 	 * Register custom endpoints for REST API
 	 */
 	public function register_rest_routes() {
-	    register_rest_route( 'acf/v1', '/options', array(
+	    register_rest_route( 'acf-rest-fields/v1', '/options', array(
 	        'methods' => 'GET',
 	        'callback' => array($this, 'get_acf_options_all')
 	    ));
-	    register_rest_route( 'acf/v1', '/options/(?P<field>\S+)', array(
+	    register_rest_route( 'acf-rest-fields/v1', '/options/(?P<field>\S+)', array(
 	        'methods' => 'GET',
 	        'callback' => array($this, 'get_acf_options_single')
 	    ));
