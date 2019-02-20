@@ -54,13 +54,28 @@ class Acf_Rest_Fields_Rest {
 
 	}
 
-	public function get_register_post_type_fields($post, $object, $field_name) {
+	/**
+	 * Get required ACF content for post type requests
+	 *
+	 * @since    1.0.0
+	 * @param  object $post       [description]
+	 * @return array              [description]
+	 */
+	public function get_register_post_type_fields($post) {
 
-		// TODO - Filter in / out requested fields
+		// If ACF is flagged to false return nothing
+		if( isset($_REQUEST['acf']) && ($_REQUEST['acf'] === 'false' || $_REQUEST['acf'] === '0') ) {
+			return array();
+		}
 
 		return get_fields($post->id);
 	}
 
+	/**
+	 * Register custom fields to post types
+	 *
+	 * @since    1.0.0
+	 */
 	public function register_post_type_fields() {
 		$options = get_option( 'acf-rest-fields', array() );
 
