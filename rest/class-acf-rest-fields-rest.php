@@ -68,7 +68,15 @@ class Acf_Rest_Fields_Rest {
 			return array();
 		}
 
-		return get_fields($post->id);
+		// Get all ACF fields
+		$fields = get_fields($post->id);
+
+		// Filter out to only include require fields if requested
+		if( isset($_REQUEST['acf']) && is_array($_REQUEST['acf']) ) {
+			$fields = array_intersect_key($fields, array_flip($_REQUEST['acf']));
+		}
+
+		return $fields;
 	}
 
 	/**
