@@ -171,6 +171,7 @@ class Acf_Rest_Fields {
 		$plugin_rest = new Acf_Rest_Fields_Rest( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'rest_api_init', $plugin_rest, 'register_post_type_fields' );
+		$this->loader->add_action( 'rest_api_init', $plugin_rest, 'register_rest_routes' );
 
 	}
 

@@ -22,5 +22,4 @@ Add ACF fields to existing REST endpoints instead of using of custom endpoints a
 * Add custom field content to taxonomy queries
 * Add custom fields to Attachments, Widgets, Comments, Users
 * Find solution to adding ACF fields to menu queries in other plugins
-* Add Options page queries.
 * Add toggle to all ACF fields in back end to blacklist them from the REST requests

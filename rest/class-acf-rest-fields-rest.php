@@ -96,4 +96,49 @@ class Acf_Rest_Fields_Rest {
 		}
 	}
 
+	/**
+	 * Retrieve single ACF options page value
+	 *
+	 * @since 1.0.0
+	 * @param WP_REST_Request $request
+	 * @return array|void
+	 */
+	public function get_acf_options_single( WP_REST_Request $request ){
+	    if($field = get_field($request['field'], 'option')) {
+	        return $field;
+	    } else {
+	        return;
+	    }
+	}
+
+	/**
+	 * Retrieve array of all ACF options page values
+	 *
+	 * @since 1.0.0
+	 * @return object
+	 */
+	public function get_acf_options_all(){
+		$fields = get_fields('options');
+
+		if($fields) {
+			return $fields;
+		}
+
+	    return new stdClass();
+	}
+
+	/**
+	 * Register custom endpoints for REST API
+	 */
+	public function register_rest_routes() {
+	    register_rest_route( 'acf/v1', '/options', array(
+	        'methods' => 'GET',
+	        'callback' => array($this, 'get_acf_options_all')
+	    ));
+	    register_rest_route( 'acf/v1', '/options/(?P<field>\S+)', array(
+	        'methods' => 'GET',
+	        'callback' => array($this, 'get_acf_options_single')
+	    ));
+	}
+
 }
