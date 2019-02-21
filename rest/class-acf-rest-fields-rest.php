@@ -129,6 +129,8 @@ class Acf_Rest_Fields_Rest {
 
 	/**
 	 * Register custom endpoints for REST API
+	 *
+	 * @since 1.0.0
 	 */
 	public function register_rest_routes() {
 	    register_rest_route( 'acf-rest-fields/v1', '/options', array(
@@ -139,6 +141,41 @@ class Acf_Rest_Fields_Rest {
 	        'methods' => 'GET',
 	        'callback' => array($this, 'get_acf_options_single')
 	    ));
+	}
+
+	/**
+	 * Add settig to all ACF fields to determine if they should be hidden from REST requests
+	 *
+	 * @since 1.0.0
+	 * @param  $array $field ACF Field array
+	 */
+	public function render_acf_field_settings($field) {
+		acf_render_field_setting($field, array(
+			'label'			=> __('REST Display', 'acf-rest-fields'),
+			'instructions'	=> __('Determine if this data will be accessible in the REST API', 'acf-rest-fields'),
+			'type'			=> 'true_false',
+			'default_value' => true,
+			'name'			=> 'rest_display',
+			'ui'			=> 1,
+			'class'			=> 'field-required'
+		), true);
+	}
+
+	/**
+	 * Hijack the load value filter to remove filds user has opted out of for the API
+	 *
+	 * @since 1.0.0
+	 * @param  any|null $value   current ACF field vaue
+	 * @param  int      $post_id post ID
+	 * @param  array    $field   acf field array
+	 * @return any|null
+	 */
+	public function remove_blacklisted_acf_fields($value, $post_id, $field) {
+		if( defined('REST_REQUEST') && $field['rest_display'] === 0 ) {
+			return null;
+		}
+
+		return $value;
 	}
 
 }
