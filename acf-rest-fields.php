@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       ACF REST Fields
  * Plugin URI:        http://github.co.uk
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Add ACF fields to existing REST endpoints instead of using of custom endpoints and add custom endpoints for ACF only content.
  * Version:           1.0.0
  * Author:            Chris Morris
  * Author URI:        https://github.com/codecomp/acf-rest-fields
