@@ -171,7 +171,7 @@ class Acf_Rest_Fields_Rest {
 	 * @return any|null
 	 */
 	public function remove_blacklisted_acf_fields($value, $post_id, $field) {
-		if( defined('REST_REQUEST') && $field['rest_display'] === 0 ) {
+		if( defined('REST_REQUEST') && array_key_exists('rest_display', $field) && $field['rest_display'] === 0 ) {
 			return null;
 		}
 
