@@ -61,7 +61,7 @@ class Acf_Rest_Fields_Rest {
 	 * @param  object $post       [description]
 	 * @return array              [description]
 	 */
-	public function get_register_post_type_fields($post) {
+	public function get_post_acf_fields($post) {
 
 		// If ACF is flagged to false return nothing
 		if( isset($_REQUEST['acf']) && ($_REQUEST['acf'] === 'false' || $_REQUEST['acf'] === '0') ) {
@@ -90,7 +90,7 @@ class Acf_Rest_Fields_Rest {
 		if( $options['post_types'] ){
 			foreach ($options['post_types'] as $post_type) {
 				register_rest_field($post_type, "acf", array(
-					'get_callback' => array($this, 'get_register_post_type_fields')
+					'get_callback' => array($this, 'get_post_acf_fields')
 				));
 			}
 		}
@@ -176,6 +176,27 @@ class Acf_Rest_Fields_Rest {
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Add ACF fields to a revision request
+	 *
+	 * @param [type] $response class
+	 * @param [type] $post     class
+	 */
+	function add_acf_fields_to_revisions($response, $post){
+		$data = $response->get_data();
+		$options = get_option( 'acf-rest-fields', array() );
+		$original_post = get_post($post->post_parent);
+
+		if( !in_array($original_post->post_type, $options['post_types']) ){
+			return rest_ensure_response( $data );
+		}
+
+		$post->id = $post->ID;
+		$data['acf'] = $this->get_post_acf_fields($post);
+
+		return rest_ensure_response( $data );
 	}
 
 }
