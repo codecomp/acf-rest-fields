@@ -175,6 +175,7 @@ class Acf_Rest_Fields {
 		$this->loader->add_action( 'acf/render_field_settings', $plugin_rest, 'render_acf_field_settings' );
 		$this->loader->add_action( 'acf/load_value', $plugin_rest, 'remove_blacklisted_acf_fields', 999, 3 );
 		$this->loader->add_action( 'rest_prepare_revision', $plugin_rest, 'add_acf_fields_to_revisions', 10, 2 );
+		$this->loader->add_action( 'rest_api_init', $plugin_rest, 'register_user_fields' );
 
 	}
 

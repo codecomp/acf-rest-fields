@@ -199,4 +199,40 @@ class Acf_Rest_Fields_Rest {
 		return rest_ensure_response( $data );
 	}
 
+	/**
+	 * Register custom fields to users
+	 */
+	function register_user_fields(){
+		register_rest_field( 'user', 'acf',
+		    array(
+		        'get_callback' => array($this, 'get_users_acf_fields')
+		     )
+		);
+	}
+
+	/**
+	 * Get required ACF content for user requests
+	 *
+	 * @param  array $user
+	 * @param  [] $field_name
+	 * @param  object $request
+	 * @return array
+	 */
+	function get_users_acf_fields( $user, $field_name, $request ) {
+		// If ACF is flagged to false return nothing
+		if( isset($_REQUEST['acf']) && ($_REQUEST['acf'] === 'false' || $_REQUEST['acf'] === '0') ) {
+			return array();
+		}
+
+		// Get all ACF fields
+		$fields = get_fields('user_'.$user['id']);
+
+		// Filter out to only include require fields if requested
+		if( isset($_REQUEST['acf']) && is_array($_REQUEST['acf']) ) {
+			$fields = array_intersect_key($fields, array_flip($_REQUEST['acf']));
+		}
+
+		return $fields;
+	}
+
 }
