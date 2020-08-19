@@ -68,12 +68,16 @@ class Acf_Rest_Fields_Rest {
 			return array();
 		}
 
-		// Get all ACF fields
-		$fields = get_fields($post->id);
-
-		// Filter out to only include require fields if requested
 		if( isset($_REQUEST['acf']) && is_array($_REQUEST['acf']) ) {
-			$fields = array_intersect_key($fields, array_flip($_REQUEST['acf']));
+			// If requesrting specific fields manually colelct these
+			$fields = array();
+			foreach($_REQUEST['acf'] as $key){
+				$fields[$key] = get_field($key, $post->id);
+			}
+		} else {
+			// Very slow method for getting all post fields as it requires looking up all fields
+			// so avoid using for requests pulling multiple if possible
+			$fields = get_fields($post->id);
 		}
 
 		return $fields;
